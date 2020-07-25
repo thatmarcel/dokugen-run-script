@@ -6,7 +6,9 @@ if ! [ -x "$(command -v deno)" ]; then
         brew install deno
     else
         # Install Deno via the official install script
-        apt --assume-yes install unzip
+        if [ -x "$(command -v apt)" ]; then
+            apt --assume-yes install unzip
+        fi
         curl -fsSL https://deno.land/x/install/install.sh | sh
     fi
 fi
@@ -16,4 +18,4 @@ if ! [ -d "meta" ]; then
     mkdir -p meta
     echo Example >> meta/site-name
 fi
-deno run --allow-read --allow-net --unstable --reload=https://src.dokugen.co https://src.dokugen.co/dokugen.ts
+deno run --allow-read --allow-net --unstable --reload https://src.dokugen.co/dokugen.ts
