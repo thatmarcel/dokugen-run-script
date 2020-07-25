@@ -1,11 +1,9 @@
 #!/bin/sh
 
-which -s deno
-if [[ $? != 0 ]]; then
+if ! [ -x "$(command -v deno)" ]; then
     # Install Deno
     if [ "$(uname)" == "Darwin" ]; then
-        which -s brew
-        if [[ $? == 0 ]]; then
+        if [ -x "$(command -v brew)" ]; then
             # Install Deno via Homebrew
             brew install deno
         else
@@ -19,6 +17,8 @@ if [[ $? != 0 ]]; then
 fi
 
 mkdir -p routes
-mkdir -p meta
-echo Example >> meta/site-name
+if ! [ -d "meta" ]; then
+    mkdir -p meta
+    echo Example >> meta/site-name
+fi
 deno run --allow-read --allow-net --unstable --reload=https://src.dokugen.co https://src.dokugen.co/dokugen.ts
