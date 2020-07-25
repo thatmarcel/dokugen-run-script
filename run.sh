@@ -6,7 +6,7 @@ if ! [ -x "$(command -v deno)" ]; then
         brew install deno
     else
         # Install Deno via the official install script
-        if [ -x "$(command -v apt)" ]; then
+        if ! [ -x "$(command -v unzip)" ] && [ -x "$(command -v apt)" ]; then
             apt --assume-yes install unzip
         fi
         curl -fsSL https://deno.land/x/install/install.sh | sh
